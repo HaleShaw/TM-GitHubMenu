@@ -10,7 +10,7 @@
 // @author              Hale Shaw
 // @homepage            https://greasyfork.org/zh-CN/scripts/398004
 // @supportURL          https://greasyfork.org/zh-CN/scripts/398004/feedback
-// @icon                https://greasyfork.org/assets/blacklogo16-bc64b9f7afdc9be4cbfa58bdd5fc2e5c098ad4bca3ad513a27b15602083fd5bc.png
+// @icon                https://github.githubassets.com/favicon.ico
 // @require             https://greasyfork.org/scripts/398010-commonutils/code/CommonUtils.js?version=781197
 // @match               https://github.com/*
 // @match               https://github.wdf.sap.corp/*
