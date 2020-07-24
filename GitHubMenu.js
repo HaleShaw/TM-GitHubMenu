@@ -22,8 +22,8 @@
 (function () {
   'use strict';
 
-  // If you want to use it on a enterprise github, you should add the URL of enterprise github in the match list.
   // 如果你想在Github企业版上使用它，你需要将你的Github企业版URL添加到脚本上方的match列表中。
+  // If you want to use it on a enterprise github, you should add the URL of enterprise github in the match list.
 
   const scheme = "https://";
   const urlSeparator = "/";
