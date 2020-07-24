@@ -2,6 +2,7 @@
 
 Tampermonkey-Add GitHub Menu
 
-![Menu_EN](https://github.com/HaleShaw/TM-GitHubMenu/blob/master/Menu_EN.png)
+为GitHub头添加更多的菜单项，让你能够快速抵达你想要的页面。
+Add more menu items on the header of GitHub to quickly reach the page you want.
 
-![Menu_ZH_CN](https://github.com/HaleShaw/TM-GitHubMenu/blob/master/Menu_ZH_CN.png)
+![Menu](https://github.com/HaleShaw/TM-GitHubMenu/blob/master/menu.png)
