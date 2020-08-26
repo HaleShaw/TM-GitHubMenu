@@ -6,13 +6,14 @@
 // @description:zh-CN   为GitHub头添加更多的菜单项，让你能够快速抵达你想要的页面。
 // @description:en      Add more menu items on the header of GitHub to quickly reach the page you want.
 // @namespace           https://greasyfork.org/zh-CN/users/331591
-// @version             1.1.0
+// @version             1.1.1
 // @author              Hale Shaw
 // @homepage            https://greasyfork.org/zh-CN/scripts/398004
 // @supportURL          https://greasyfork.org/zh-CN/scripts/398004/feedback
 // @icon                https://github.githubassets.com/favicon.ico
 // @match               *://github.com/*
 // @match               *://github.wdf.sap.corp/*
+// @match               *://github.tools.sap/*
 // @license             AGPL-3.0-or-later
 // @compatible	        Chrome
 // @run-at              document-idle
@@ -30,15 +31,17 @@
   const domainName = document.domain;
   const defaultAccountName = "HaleShaw";
 
-  const accountName = getAccountName();
   const menu = getMenu();
-  const itemClassName = getClassName(menu);
-  addMenuItem();
+  if (menu != undefined) {
+    const accountName = getAccountName();
+    const itemClassName = getClassName(menu);
+    addMenuItem(accountName, itemClassName);
+  }
 
   /**
    * Add menu item.
    */
-  function addMenuItem() {
+  function addMenuItem(accountName, itemClassName) {
     const watchText = "Watching";
     const starText = "Stars";
     const profileText = "Profile";
@@ -52,20 +55,21 @@
     const settingUrl = host + "settings/profile";
     const repoUrl = host + accountName + "?tab=repositories";
 
-    createMenuItem(watchText, watchUrl, menu);
-    createMenuItem(starText, starUrl, menu);
-    createMenuItem(profileText, profileUrl, menu);
-    createMenuItem(setText, settingUrl, menu);
-    createMenuItem(repoText, repoUrl, menu);
+    createMenuItem(watchText, watchUrl, menu, itemClassName);
+    createMenuItem(starText, starUrl, menu, itemClassName);
+    createMenuItem(profileText, profileUrl, menu, itemClassName);
+    createMenuItem(setText, settingUrl, menu, itemClassName);
+    createMenuItem(repoText, repoUrl, menu, itemClassName);
   }
 
   /**
    * Create menu item.
-   * @param {String} name
-   * @param {String} url
-   * @param {Object} menu
+   * @param {String} name button name.
+   * @param {String} url button href.
+   * @param {Object} menu button parent element.
+   * @param {String} itemClassName button class name.
    */
-  function createMenuItem(name, url, menu) {
+  function createMenuItem(name, url, menu, itemClassName) {
     const menuItem = document.createElement("a");
     menuItem.text = name;
     menuItem.className = itemClassName;
@@ -102,7 +106,7 @@
    */
   function getMenu() {
     const navs = document.getElementsByTagName("nav");
-    if (navs && navs != undefined && "Global" == navs[0].getAttribute("aria-label")) {
+    if (navs && navs != undefined && navs[0] != undefined && "Global" == navs[0].getAttribute("aria-label")) {
       return navs[0];
     }
   }
