@@ -6,7 +6,7 @@
 // @description:zh-CN  为GitHub头添加更多的菜单项，让你能够快速抵达你想要的页面。
 // @description:en     Add more menu items on the header of GitHub to quickly reach the page you want.
 // @namespace          https://github.com/HaleShaw
-// @version            1.2.0
+// @version            1.2.1
 // @author             HaleShaw
 // @copyright          2020+, HaleShaw (https://github.com/HaleShaw)
 // @license            AGPL-3.0-or-later
@@ -45,8 +45,10 @@
   main();
 
   function main() {
+    logInfo(GM_info.script.name, GM_info.script.version);
     let accountName = getAccountName();
     if (accountName == undefined) {
+      console.warn("Failed to get account name, default account name [" + defaultAccountName + "] will be used");
       accountName = defaultAccountName;
     } else {
       hasLogin = true;
@@ -57,6 +59,18 @@
     }
   }
 
+  /**
+   * Log the title and version at the front of the console.
+   * @param {String} title title.
+   * @param {String} version script version.
+   */
+  function logInfo(title, version) {
+    const titleStyle = "color:white;background-color:#606060";
+    const versionStyle = "color:white;background-color:#1475b2";
+    const logTitle = " " + title + " ";
+    const logVersion = " " + version + " ";
+    console.log("%c" + logTitle + "%c" + logVersion, titleStyle, versionStyle);
+  }
 
   /**
    * Add menu item.
@@ -141,6 +155,33 @@
    * Get account name.
    */
   function getAccountName() {
+    let accountName = getAccountNameWay1();
+    if (accountName == undefined) {
+      accountName = getAccountNameWay2();
+    }
+    return accountName;
+  }
+
+  /**
+   * The first way to get account name.
+   */
+  function getAccountNameWay1() {
+    let accountName;
+    const detailsEle = document.getElementsByClassName("details-overlay details-reset js-feature-preview-indicator-container");
+    if (detailsEle && detailsEle != undefined && detailsEle[0] != undefined) {
+      const data = detailsEle[0].getAttribute("data-feature-preview-indicator-src");
+      if (data != undefined) {
+        const dataArr = data.split("/");
+        accountName = dataArr[2];
+      }
+    }
+    return accountName;
+  }
+
+  /**
+   * The second way to get account name.
+   */
+  function getAccountNameWay2() {
     let accountName;
     const dropdownItems = document.querySelectorAll("a[class=dropdown-item]");
     const itemLength = dropdownItems.length;
@@ -155,8 +196,10 @@
           break;
         }
       }
-      const splitArr = accountHref.split("/");
-      accountName = splitArr[splitArr.length - 1];
+      if (accountHref != undefined) {
+        const splitArr = accountHref.split("/");
+        accountName = splitArr[splitArr.length - 1];
+      }
     }
     return accountName;
   }
